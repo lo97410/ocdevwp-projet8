@@ -151,7 +151,7 @@ function slide(action) {
 	if(slideValue==0)
 			{
 				slideValue=1;
-				let timerSlider=setInterval(function(){slide('slide_suivant');}, 5000);
+				let timerSlider=setInterval(function(){slide('slide_suivant');}, 7000);
 			}
 
 }/* End function slide() */
