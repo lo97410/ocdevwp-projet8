@@ -24,7 +24,7 @@ let curentindex=0;
 slides.forEach((valeur, index) => {
 	/* On crée la dot du slide */
 	console.log("Valeur : "+valeur+" - Index : "+index);//////
-	const dotDiv=document.querySelector("dots");
+	const dotDiv=document.querySelector(".dots");
 	const dotLien=document.createElement("a");
 	dotLien.href="javascript:slide("+index+");";
 	dotLien.title="Slide "+index;
@@ -63,10 +63,10 @@ function slide(slideIndex) {
 	tagdLine.innerHTML=slides[slideIndex]["tagLine"];
 	
 	// On éteins la dot du slide précedent
-	const dotOff = document.querySelector("dotspan_"+curentindex);
+	const dotOff = document.querySelector("#dotspan_"+curentindex);
 	dotSelected.classList.remove("dot_selected");
 	// On allume la dot concernée
-	const dotSelected = document.querySelector("dotspan_"+slideIndex);
+	const dotSelected = document.querySelector("#dotspan_"+slideIndex);
 	dotSelected.classList.add("dot_selected");
 
 	// On actualise curentindex
