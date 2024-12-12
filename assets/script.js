@@ -23,10 +23,10 @@ let curentindex=0;
 /* On liste le tableau pour le compter et créer les dots */
 slides.forEach((valeur, index) => {
 	/* On crée la dot du slide */
-	console.log("Valuer : "+valeur+" - Index : "+index);//////
+	console.log("Valeur : "+valeur+" - Index : "+index);//////
 	const dotDiv=document.querySelector("dots");
 	const dotLien=document.createElement("a");
-	dotLien.href="javascript:slide("+thisIndex+");";
+	dotLien.href="javascript:slide("+index+");";
 	dotLien.title="Slide "+index;
 
 	const curentDotSpan=document.createElement("span");
@@ -56,7 +56,7 @@ function slide(slideIndex) {
 			}
 			console.log("slideIndex : "+slideIndex);//////
 	
-			// On affecte les nouvelles valeurs image et tagline au slide
+	// On affecte les nouvelles valeurs image et tagline au slide
 	const slideImg = document.querySelector(".banner-img");
 	slideImg.src="./assets/images/slideshow/"+slides[slideIndex]["image"];
 	const tagdLine=document.querySelector(".banner > p");
