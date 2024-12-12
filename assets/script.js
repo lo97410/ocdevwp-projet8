@@ -18,29 +18,18 @@ const slides = [
 ]
 
 /* Slides des images et textes */
-
-var maxIndex=0;
-var curentIndex=-1;
-var action="";
-var slideValue=0;
-var i;
+let curentindex=0;
 
 /* On liste le tableau pour le compter et créer les dots */
 slides.forEach((valeur, index) => {
-	//console.log("Valeur : "+valeur.image+" - "+valeur.tagLine+" / Index : "+index);//////
-	let thisImage=valeur.image;
-	let thistagLine=valeur.tagLine;
-	let thisIndex=index;
-	maxIndex=index;
-	//console.log("MaxIndex : "+maxIndex);//////
-
 	/* On crée la dot du slide */
-	var dotDiv=document.getElementById("dotsid");
-	var dotLien=document.createElement("a");
+	console.log("Valuer : "+valeur+" - Index : "+index);//////
+	const dotDiv=document.querySelector("dots");
+	const dotLien=document.createElement("a");
 	dotLien.href="javascript:slide("+thisIndex+");";
 	dotLien.title="Slide "+index;
 
-	var curentDotSpan=document.createElement("span");
+	const curentDotSpan=document.createElement("span");
 	curentDotSpan.id="dotspan_"+index;
 	curentDotSpan.classList.add("dot");
 
@@ -49,121 +38,53 @@ slides.forEach((valeur, index) => {
 });
 
 //console.table(slides);//////
-//console.table(slides[0]);//////
-//console.table(slides[0]['image']);//////
 
-function slide(action) {
+function slide(slideIndex) {
 	
-	console.log("Action : "+action);//////
+	console.log("slideIndex : "+slideIndex);//////
 
-	if(action == "slide_precedent") {
-		curentIndex=curentIndex-1;
-		/* Controle de la valeur min de curentIndex */
-		if(curentIndex<0)
+	// On crée la boucle infinie du diaporama
+	if(slideIndex < 0)
+		{
+		slideIndex=slides.length - 1;
+		}
+		else {
+			if(slideIndex >= slides.length)
 				{
-					curentIndex=maxIndex;
-				}
-		let slideImage=document.getElementById("img_slideshow");
-		let slideTagLine=document.getElementById("tagline");
-		var goImage="./assets/images/slideshow/"+slides[curentIndex]['image'];
-		var goTagLine=slides[curentIndex]['tagLine'];
-		slideImage.src=goImage;
-		slideTagLine.innerHTML=goTagLine;
-		
-		console.log("goImage : "+goImage+" - goTagLine : "+goTagLine+" - curentIndex : "+curentIndex+" - Action : "+action);//////
-
-		/* Gestion des dots */
-		/* On éteint toutes les dots */
-		for(i=0; i<=maxIndex; i++)
-			{
-			let previousDotSelected=document.getElementById("dotspan_"+i);
-			previousDotSelected.classList.remove("dot_selected");
-			//previousDotSelected.style.background="none";
-			}
-		let curentDotSelected=document.getElementById("dotspan_"+curentIndex);
-		curentDotSelected.classList.add("dot_selected");
-		//curentDotSelected.style.background="white";
-		//console.log("Puce "+curentIndex+" allumée");//////
-	}
-	else {
-		if(action == "slide_suivant") {
-			curentIndex=curentIndex+1;
-			/* Controle de la valeur max de curentIndex */
-			if(curentIndex>maxIndex)
-					{
-						curentIndex=0;
-					}
-			let slideImage=document.getElementById("img_slideshow");
-			let slideTagLine=document.getElementById("tagline");
-			console.log("slideTagLine : "+slideTagLine);//////
-			var goImage="./assets/images/slideshow/"+slides[curentIndex]['image'];
-			var goTagLine=slides[curentIndex]['tagLine'];
-			//console.log("slides[curentIndex]['image'] : "+slides[curentIndex]['image']+" -*- goTagLine : "+goTagLine);//////
-			slideImage.src=goImage;
-			slideTagLine.innerHTML=goTagLine;
-			//console.log("goImage : "+goImage+" - goTagLine : "+goTagLine+" - curentIndex : "+curentIndex+" - Action : "+action);//////
-			
-			/* Gestion des dots */
-			/* On éteint toutes les dots */
-			for(i=0; i<=maxIndex; i++)
-				{
-				let previousDotSelected=document.getElementById("dotspan_"+i);
-				previousDotSelected.classList.remove("dot_selected");
-				//previousDotSelected.style.background="none";
-				}
-			let curentDotSelected=document.getElementById("dotspan_"+curentIndex);
-			curentDotSelected.classList.add("dot_selected");
-			//curentDotSelected.style.background="white";
-			//console.log("Puce "+curentIndex+" allumée");//////
-			}
-			else {
-					if(Number.isInteger(action))
-						{
-							curentIndex=action;
-							let slideImage=document.getElementById("img_slideshow");
-							let slideTagLine=document.getElementById("tagline");
-							//console.log("slideTagLine : "+slideTagLine);//////
-							var goImage="./assets/images/slideshow/"+slides[curentIndex]['image'];
-							var goTagLine=slides[curentIndex]['tagLine'];
-							//console.log("slides[curentIndex]['image'] : "+slides[curentIndex]['image']+" -*- goTagLine : "+goTagLine);//////
-							slideImage.src=goImage;
-							slideTagLine.innerHTML=goTagLine;
-							//console.log("goImage : "+goImage+" - goTagLine : "+goTagLine+" - curentIndex : "+curentIndex+" - Action : "+action);//////
-							
-							/* Gestion des dots */
-							/* On éteint toutes les dots */
-							for(i=0; i<=maxIndex; i++)
-								{
-								let previousDotSelected=document.getElementById("dotspan_"+i);
-								previousDotSelected.classList.remove("dot_selected");
-								//previousDotSelected.style.background="none";
-								}
-							let curentDotSelected=document.getElementById("dotspan_"+curentIndex);
-							curentDotSelected.classList.add("dot_selected");
-							//curentDotSelected.style.background="white";
-							//console.log("Puce "+curentIndex+" allumée");//////
-						}
+					slideIndex=0;
 				}
 			}
-
-	/* On lance le défilement si inactif */
+			console.log("slideIndex : "+slideIndex);//////
 	
-	if(slideValue==0)
-			{
-				slideValue=1;
-				let timerSlider=setInterval(function(){slide('slide_suivant');}, 7000);
-			}
+			// On affecte les nouvelles valeurs image et tagline au slide
+	const slideImg = document.querySelector(".banner-img");
+	slideImg.src="./assets/images/slideshow/"+slides[slideIndex]["image"];
+	const tagdLine=document.querySelector(".banner > p");
+	tagdLine.innerHTML=slides[slideIndex]["tagLine"];
+	
+	// On éteins la dot du slide précedent
+	const dotOff = document.querySelector("dotspan_"+curentindex);
+	dotSelected.classList.remove("dot_selected");
+	// On allume la dot concernée
+	const dotSelected = document.querySelector("dotspan_"+slideIndex);
+	dotSelected.classList.add("dot_selected");
 
-}/* End function slide() */
+	// On actualise curentindex
+	curentindex=slideIndex;
+}// End function slide() //
 
 window.onload = function() {
     //console.log("Page loaded!");//////
 
-	let arrowLeft=document.getElementById("slide_precedent");
-	arrowLeft.addEventListener('click', slide("slide_precedent"));
-	let arrowRight=document.getElementById("slide_suivant");
-	arrowLeft.addEventListener('click', slide("slide_suivant"));
+	// On lance les écouteurs 'évènements sur les flèches gauche et droite
+	const arrowLeft=document.querySelector("arrow_leftt");
+	arrowLeft.addEventListener('click', slide(curentindex-1));
+	let arrowRight=querySelector("arrow_right");
+	arrowLeft.addEventListener('click', slide(curentindex+1));
 
+	// On lance le défilement auto
+	//let timerSlider=setInterval(function(){slide(curentindex+1);}, 7000);
+
+	// On initialise le diaporama
 	slide(0);
-
 };
