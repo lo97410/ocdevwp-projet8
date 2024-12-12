@@ -82,9 +82,9 @@ window.onload = function() {
 	arrowRight.title="Suivant";
 	arrowRight.addEventListener('click', () => { slide(curentindex+1); });
 
-	// On lance le défilement auto
-	let timerSlider=setInterval(function(){slide(curentindex+1);}, 7000);
-
 	// On initialise le diaporama
 	slide(0);
+
+	// On lance le défilement auto
+	let timerSlider=setInterval(function(){slide(curentindex+1);}, 7000);
 };
